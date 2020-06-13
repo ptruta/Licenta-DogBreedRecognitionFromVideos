@@ -2,8 +2,6 @@
 Flask App With Integration of 1 CNN Model Trained/1 using Transfer Learning
 
 # User Manual
-# Register and Login Form Pages
-
 *In order to use the app, a user should register and login.  Once a user accessed from his/herbrowser the web application he/she will have the possibility to see the Login Form.  If theuser has already an account he/she will enter his/her credentials for username and passwordstored in our database and click the login Button. If the user isn’t register yet he/she can have two possibilities to have access the registerpage in order to get registered, he/she can access it by the two buttons seen in the images
 ![alt text](http://url/to/img.png).
 ![alt text](http://url/to/img.png).
