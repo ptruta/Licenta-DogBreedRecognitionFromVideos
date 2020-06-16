@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Dog Shop app</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+<style>
+* {
+  	box-sizing: border-box;
+  	font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+  	font-size: 16px;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+	}
+body {
+	background-color: #435165;
+	margin: 0;
+}
+.navtop {
+	z-index: 2;
+  	background-color: #2f3947;
+  	height: 60px;
+  	width: 100%;
+  	border: 0;
+}
+.navtop div {
+  	display: flex;
+  	margin: 0 auto;
+  	width: 1000px;
+  	height: 100%;
+}
+.navtop div h1, .navtop div a {
+  	display: inline-flex;
+  	align-items: center;
+}
+.navtop div h1 {
+  	flex: 1;
+  	font-size: 24px;
+  	padding: 0;
+ 	margin: 0;
+  	color: #eaebed;
+  	font-weight: normal;
+}
+.navtop div a {
+  	padding: 0 20px;
+  	text-decoration: none;
+  	color: #c1c4c8;
+  	font-weight: bold;
+}
+.navtop div a i {
+  	padding: 2px 8px 0 0;
+}
+.navtop div a:hover {
+  	color: #eaebed;
+}
+body.loggedin {
+  	background-color: #f3f4f7;
+}
+.content {
+  	width: 1000px;
+  	margin: 0 auto;
+}
+.content h2 {
+  	margin: 0;
+  	padding: 25px 0;
+  	font-size: 22px;
+  	border-bottom: 1px solid #e0e0e3;
+  	color: #4a536e;
+}
+.content > p, .content > div {
+  	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  	margin: 25px 0;
+  	padding: 25px;
+	background-color: #fff;
+}
+.content > p table td, .content > div table td {
+	padding: 5px;
+}
+.content > p table td:first-child, .content > div table td:first-child {
+	font-weight: bold;
+	color: #4a536e;
+	padding-right: 15px;
+}
+.content > div p {
+	padding: 5px;
+	margin: 0 0 10px 0;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.pagination-page-info {
+    padding: .6em;
+    padding-left: 0;
+    width: 40em;
+    margin: .5em;
+    margin-left: 0;
+    font-size: 12px;
+}
+.pagination-page-info b {
+    color: black;
+    background: #6aa6ed;
+    padding-left: 2px;
+    padding: .1em .25em;
+    font-size: 150%;
+}
+
+.button1 {
+  font: bold 15px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  float:left;
+}
+
+.button2 {
+  font: bold 15px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  float:right
+}
+
+.show-Text{
+  text-align: center;
+  font-size: 15px;
+}
+
+.content-middle-buttons{
+  margin-left:15vw;
+  width: 10vw;
+}
+</style>
+</head>
+<body class="loggedin">
+	<nav class="navtop">
+		<div>
+			<h1>Dog Lovers App</h1>
+			<a href="{{ url_for('upload_file') }}"><i class="fas fa-home"></i>Home</a>
+			<a href="{{ url_for('profile') }}"><i class="fas fa-user-circle"></i>Profile</a>
+			<a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+		</div>
+	</nav>
+	<div class="content">
+		<div>
+			<h2>Profile Page</h2>
+			<p>Your account details are below:</p>
+			<table>
+				<tr>
+					<td>Username:</td>
+					<td>{{ account['username'] }}</td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td>{{ account['password'] }}</td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td>{{ account['email'] }}</td>
+				</tr>
+				<tr>
+					<td>Uploads:</td>
+					<td>
+						<table>
+						  <tr>
+						    <th>ID</th>
+							<th>Uploaded File</th>
+							<th>Accuracy Of Prediction</th>
+							<th>Predicted Breed</th>
+							<th>Date Of Upload</th>
+						  </tr>
+						  <tbody>
+						  {%for i in range(0,len)%} 
+						  <tr>
+						    <td>{{records[i]['id']}}</td>
+							<td> 
+								<video height="150vh" controls>
+								  <source src="{{records[i]['name']}}" type="video/mp4">
+								</video>
+							</td>
+							<td>{{records[i]['accuracy']}}%</td>
+							<td>{{records[i]['predicted_class']}}</td>
+							<td>{{records[i]['date_of_creation']}}</td>
+						  </tr>
+						{%endfor%} 
+						</tbody>
+						</table>
+						  {%if lengthForUploads == 0 %} 
+							<a class="button1" href="{{ url_for('profile', page=prev_page) }}" style="display:none;">Previous</a>
+							<a class="button1" href="{{ url_for('profile', page=prev_page) }}" style="display:none;">Previous</a>
+							<label class="show-Text content-middle-buttons" for="male" style="display:none;">Page:</label>
+						    <input class="show-Text" type="text" value="{{page+1}}" readOnly="true" style="display:none;">
+							<a class="button2" href="{{ url_for('profile', page=next_page) }} " style="display:none;">Next</a>
+							<a class="button2" href="{{ url_for('profile', page=next_page) }} " style="display:none;">Next</a>
+					      {%else%}
+						      {%if page == 0%} 
+								<a class="button1" href="{{ url_for('profile', page=prev_page) }}" style="display:none;">Previous</a>
+							  {%else%}
+								<a class="button1" href="{{ url_for('profile', page=prev_page) }}">Previous</a>
+							  {%endif%}
+							  <label class="show-Text content-middle-buttons" for="male">Page:</label>
+							  <input class="show-Text" type="text" value="{{page+1}}" readOnly="true">
+							  {%if next_page == lengthForUploads %}
+								<a class="button2" href="{{ url_for('profile', page=next_page) }} " style="display:none;">Next</a>
+							  {%else%}
+								<a class="button2" href="{{ url_for('profile', page=next_page) }}">Next</a>
+							  {%endif%}
+						   {%endif%}							
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
